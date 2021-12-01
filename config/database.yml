@@ -21,13 +21,13 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
 
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: itechart
+  database: itechart-course
   username: postgres
   password: root
 
 development:
   <<: *default
-  database: itechart
+  database: itechart-course-development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -61,7 +61,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: itechart
+  database: itechart-course-test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -84,6 +84,6 @@ test:
 #
 production:
   <<: *default
-  database: itechart
+  database: itechart-course-production
   username: postgres
   password: <%= ENV['ITECHART-RAILS-COURSE_DATABASE_PASSWORD'] %>
