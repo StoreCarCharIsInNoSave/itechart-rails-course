@@ -1,2 +1,2 @@
 Схема сущность-связь
-![alt text](https://i.ibb.co/d51Xb0N/er.png)
+![alt text](https://i.ibb.co/QKQNH9r/er.png)
