@@ -1,26 +1,28 @@
-<h2>Log in</h2>
-
+<h2 class="ui center aligned icon header">
+  <i class="circular key icon "></i>
+  Log In
+</h2>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+  <div class="ui segment inverted">
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <div class="ui form inverted">
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email' %>
+      </div>
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: 'Password' %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <div class="ui checkbox">
+            <%= f.check_box :remember_me, class: 'hidden', tabindex: "0" %>
+            <%= f.label :remember_me %>
+          </div>
+        </div>
+      <% end %>
+      <%= f.submit "Sign up", class: 'ui button' %> Don't have an account? <%= render "devise/shared/links" %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>

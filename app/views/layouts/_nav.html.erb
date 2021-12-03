@@ -1,8 +1,7 @@
 <div class="ui huge menu inverted">
   <div class="ui container">
-    <a class="active item">
-      Fision
-    </a>
+    <%= link_to "Fision", root_path, class:'active item' %>
+
 
     <div class="right menu">
       <% if user_signed_in? %>
