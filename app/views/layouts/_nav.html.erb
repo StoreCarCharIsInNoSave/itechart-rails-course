@@ -1,0 +1,35 @@
+<div class="ui huge menu inverted">
+  <div class="ui container">
+    <a class="active item">
+      Fision
+    </a>
+
+    <div class="right menu">
+      <% if user_signed_in? %>
+        <div class="ui dropdown item">
+
+          <%= current_user.email.split('@')[0] %> <i class="dropdown icon"></i>
+          <div class="menu">
+            <a class="item">Persons</a>
+          </div>
+        </div>
+        <div class="item">
+
+          <%= link_to 'Log Out', destroy_user_session_path, class: 'ui primary button', method: :delete %>
+        </div>
+      <% else %>
+
+        <div class="item">
+
+          <%= link_to 'Log In', new_user_session_path, class: 'ui primary button' %>
+
+        </div>
+        <div class="item">
+
+          <%= link_to 'Sign Up', new_user_registration_path, class: 'ui primary button' %>
+
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
