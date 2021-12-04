@@ -1,0 +1,9 @@
+
+Style/Documentation:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - config/*.rb
+    - bin/*
