@@ -1,0 +1,26 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular id card outline icon"></i>
+  Your persons
+<div><%=link_to 'Create new Person','' , class: 'ui red basic button centered' %></div>
+</h2>
+
+
+<% @persons.each do |person| %>
+  <div class="ui centered card">
+    <div class="content">
+      <div class="center aligned header"><%=person.title %></div>
+      <div class="center aligned description">
+        <p>Name: <%=person.name %></p>
+      </div>
+      <div class="center aligned description">
+        <p>Lastname: <%=person.lastname %></p>
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="center aligned author">
+        <button class="ui blue basic button">Edit</button>
+        <%=link_to 'Delete', person_path(person) , method: :delete, class: 'ui red basic button', data: {confirm: 'Are you sure?'} %>
+      </div>
+    </div>
+  </div>
+<% end %>
