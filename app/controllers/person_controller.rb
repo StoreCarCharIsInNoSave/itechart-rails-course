@@ -1,5 +1,5 @@
 class PersonController < ApplicationController
-  before_action :require_signed_user, only: [:index, :destroy]
+  before_action :require_signed_user, only: [:index, :destroy, :create, :new]
   before_action :require_same_signed_user, only: [:destroy]
 
   def index
@@ -11,7 +11,14 @@ class PersonController < ApplicationController
   end
 
   def create
-    render plain: params
+    @person = Person.new(person_params)
+    @person.user = current_user
+    if @person.save
+      flash[:notice] = 'Person was successfully created.'
+      redirect_to person_index_path
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -42,4 +49,7 @@ class PersonController < ApplicationController
     end
   end
 
+  def person_params
+    params.require(:person).permit(:title, :name, :lastname)
+  end
 end

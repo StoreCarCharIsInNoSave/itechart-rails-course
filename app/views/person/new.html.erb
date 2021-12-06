@@ -1,13 +1,25 @@
-<h1>new person</h1>
-
+<h2 class="ui center aligned icon header">
+  <i class="circular user plus icon"></i>
+  Create person
+</h2>
 
 
 <%= form_for :person do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title, placeholder: 'Title' %>
-  <%= f.label :name %>
-  <%= f.text_field :name, placeholder: 'name' %>
-  <%= f.label :lastname %>
-  <%= f.text_field :lastname, placeholder: 'lastname' %>
-  <%= f.submit 'Create' %>
+<div class="ui segment inverted">
+  <div class="ui form inverted">
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, placeholder: 'Title' %>
+    </div>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, placeholder: 'name' %>
+    </div>
+    <div class="field">
+      <%= f.label :lastname %>
+      <%= f.text_field :lastname, placeholder: 'lastname' %>
+    </div>
+    <%= f.submit "Create person", class: 'ui button'%>
+  </div>
+</div>
 <% end %>
