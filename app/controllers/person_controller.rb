@@ -1,6 +1,6 @@
 class PersonController < ApplicationController
-  before_action :require_signed_user, only: [:index, :destroy, :create, :new]
-  before_action :require_same_signed_user, only: [:destroy]
+  before_action :require_signed_user, only: [:index, :destroy, :create, :new, :edit, :update]
+  before_action :require_same_signed_user, only: [:destroy, :edit , :update]
 
   def index
     @persons = current_user.people
@@ -8,6 +8,21 @@ class PersonController < ApplicationController
 
   def new
     @person = Person.new
+  end
+
+
+  def edit
+    @person = Person.find(params[:id])
+  end
+
+  def update
+    @person = Person.find(params[:id])
+    if @person.update(person_params)
+      flash[:notice] = "Person updated successfully"
+      redirect_to person_index_path
+    else
+      render :edit
+    end
   end
 
   def create
