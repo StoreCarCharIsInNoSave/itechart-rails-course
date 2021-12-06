@@ -17,7 +17,7 @@
 //= require semantic-ui
 //= require_tree .
 
-
+// не работает после апдейта страницы, нужен фикс
 $(document).ready(function () {
     $('.ui.dropdown').dropdown();
     $('.message .close').on('click', function () {
