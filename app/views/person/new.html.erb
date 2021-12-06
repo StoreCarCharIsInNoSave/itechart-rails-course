@@ -1,0 +1,13 @@
+<h1>new person</h1>
+
+
+
+<%= form_for :person do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title, placeholder: 'Title' %>
+  <%= f.label :name %>
+  <%= f.text_field :name, placeholder: 'name' %>
+  <%= f.label :lastname %>
+  <%= f.text_field :lastname, placeholder: 'lastname' %>
+  <%= f.submit 'Create' %>
+<% end %>

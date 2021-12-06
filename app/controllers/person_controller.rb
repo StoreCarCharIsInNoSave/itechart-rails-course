@@ -6,6 +6,14 @@ class PersonController < ApplicationController
     @persons = current_user.people
   end
 
+  def new
+    @person = Person.new
+  end
+
+  def create
+    render plain: params
+  end
+
   def destroy
     @person = Person.find(params[:id])
     if current_user.people.count > 1
