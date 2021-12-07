@@ -9,6 +9,6 @@ class User < ApplicationRecord
 
   # создание персоны при регистрации по умолчанию
   def create_person
-    Person.create(user_id: self.id, title: 'I\'am', name: 'change this field', lastname: 'change this field')
+    Person.create(user_id: id, title: 'I\'am', name: 'change this field', lastname: 'change this field')
   end
 end

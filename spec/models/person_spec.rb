@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Person, type: :model do
-
-  User.create(email: 'someemail@gmail.com', password: 'somepassword');
+  User.create(email: 'someemail@gmail.com', password: 'somepassword')
 
   it 'should not create new person without user' do
     person = Person.new(title: 'persontitle', name: 'personname', lastname: 'personlastnane')
