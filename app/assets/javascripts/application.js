@@ -17,7 +17,8 @@
 //= require semantic-ui
 //= require_tree .
 
-// не работает после апдейта страницы, нужен фикс
+
+//TODO: does not work  after click on any link
 $(document).ready(function () {
     $('.ui.dropdown').dropdown();
     $('.message .close').on('click', function () {

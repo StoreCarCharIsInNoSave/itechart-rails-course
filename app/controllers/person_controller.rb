@@ -4,6 +4,7 @@ class PersonController < ApplicationController
   before_action :require_signed_user, only: %i[index destroy create new edit update]
   before_action :require_same_signed_user, only: %i[destroy edit update]
   before_action :find_person, only: %i[edit update destroy]
+
   def index
     @persons = current_user.people
   end
@@ -58,8 +59,8 @@ class PersonController < ApplicationController
   end
 
   def require_same_signed_user
-    @person = Person.find(params[:id])
-    return if current_user == @person.user
+    person = Person.find(params[:id])
+    return if current_user == person.user
 
     flash[:alert] = 'You can only delete your own person'
     redirect_to root_path

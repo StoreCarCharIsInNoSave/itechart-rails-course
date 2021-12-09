@@ -7,7 +7,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable, :validatable
   after_create :create_person
 
-  # создание персоны при регистрации по умолчанию
+  # creation of person on registration by default
   def create_person
     Person.create(user_id: id, title: 'I\'am', name: 'change this field', lastname: 'change this field')
   end
