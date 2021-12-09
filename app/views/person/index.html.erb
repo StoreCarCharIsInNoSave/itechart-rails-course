@@ -20,6 +20,7 @@
       <div class="center aligned author">
         <%=link_to 'Edit', edit_person_path(person) ,class:'ui blue basic button' %>
         <%= link_to 'Delete', person_path(person), method: :delete, class: current_user.people.count > 1 ? 'ui red basic button' : 'ui red basic button disabled', data: { confirm: 'Are you sure?' } %>
+
         <% unless current_user.people.count > 1 %>
           <div class="ui negative message">
             <div class="header">

@@ -36,12 +36,12 @@ class PersonController < ApplicationController
   end
 
   def destroy
-    if current_user.people.count > 1
-      @person.destroy
+    if @person.destroy
       flash[:notice] = 'Person deleted successfully'
     else
-      flash[:alert] = 'You must have at least one person in your account'
+      flash[:alert] = 'Last person could not be deleted'
     end
+
     redirect_to person_index_path
   end
 
