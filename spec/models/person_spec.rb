@@ -21,12 +21,11 @@ RSpec.describe Person, type: :model do
     expect(person.save).to eq(true)
   end
 
-  it 'should check the success of creating a new person' do
-    count_before = Person.count
+
+  it 'should create new person with user' do
     person = Person.new(title: 'persontitle', name: 'personname', lastname: 'personlastnane')
     person.user = user
-    person.save
-    expect(Person.count-count_before == 1).to eq(true)
+    expect { person.save }.to change(Person, :count).by(1)
   end
 
   it 'should not create person with empty title' do
