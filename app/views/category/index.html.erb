@@ -1,7 +1,7 @@
 <h2 class="ui center aligned icon header">
   <i class="circular file alternate outline icon"></i>
   Your categories
-  <div><%= link_to 'Create new category', '#', class: 'ui red basic button centered' %></div>
+  <div><%= link_to 'Create new category', categories_new_path, class: 'ui red basic button centered' %></div>
 
 </h2>
 <% @categories.each do |category| %>

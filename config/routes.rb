@@ -13,5 +13,7 @@ Rails.application.routes.draw do
 
   get '/categories', to: 'category#index'
 
+  get '/categories/new', to: 'category#new'
+  post '/categories/new', to: 'category#create'
 
 end
