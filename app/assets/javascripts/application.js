@@ -18,6 +18,7 @@
 //= require_tree .
 
 
+//TODO: does not work  after click on any link
 $(document).ready(function () {
     $('.ui.dropdown').dropdown();
     $('.message .close').on('click', function () {

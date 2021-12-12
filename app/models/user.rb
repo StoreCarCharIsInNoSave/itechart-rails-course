@@ -5,4 +5,10 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :validatable
+  after_create :create_person
+
+  # creation of person on registration by default
+  def create_person
+    Person.create(user_id: id, title: 'I\'am', name: 'change this field', lastname: 'change this field')
+  end
 end
