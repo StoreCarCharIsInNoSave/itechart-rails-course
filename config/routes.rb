@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  get '/person/:id/categories', to: 'person#categories_index'
+
   match '/404', to: 'errors#not_found', via: :all
 
 

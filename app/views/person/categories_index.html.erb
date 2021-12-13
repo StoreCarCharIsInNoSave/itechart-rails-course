@@ -1,6 +1,6 @@
 <h2 class="ui center aligned icon header">
   <i class="circular file alternate outline icon"></i>
-  Your categories
+  Categories of <%= @person.name %>
   <div><%= link_to 'Create new category', categories_new_path, class: 'ui red basic button centered' %></div>
 
 </h2>
@@ -12,8 +12,6 @@
       <div class="center aligned header"><%= category.title %> [<%= category.debit ? 'Debit' : 'Credit' %>]</div>
 
       <div class="center aligned description">
-        <!--I used the uniq method because the same category can be debit or credit-->
-        <p>Count of persons: <%=category.person_ids.uniq.count %></p>
         <p>Total amount: N/A</p>
       </div>
     </div>
@@ -25,10 +23,5 @@
       </div>
     </div>
   </div>
-
-
-
-
-
 
 <% end %>
