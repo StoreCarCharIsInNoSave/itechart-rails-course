@@ -6,5 +6,4 @@ module CategoryHelper
     end
     return true
   end
-
 end

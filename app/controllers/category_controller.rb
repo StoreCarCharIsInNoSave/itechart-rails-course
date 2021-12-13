@@ -1,12 +1,25 @@
 class CategoryController < ApplicationController
 
-
-
-
-
-
   def new
     @category = Category.new
+  end
+
+  def edit
+    @category = Category.find(params[:id])
+  end
+
+  def update
+    @category = Category.find(params[:id])
+    PersonCategory.where(:category_id => @category.id).destroy_all
+    params[:category][:id].each do |person_id|
+      @category.people << Person.find(person_id) if person_id.present?
+    end
+    if @category.update(category_params)
+      flash[:success] = "Category updated"
+      redirect_to categories_path
+    else
+      render 'edit'
+    end
   end
 
   def create
@@ -23,6 +36,7 @@ class CategoryController < ApplicationController
     end
   end
 
+  #dot select
   def index
     @categories = []
     current_user.people.each do |person|
@@ -41,7 +55,6 @@ class CategoryController < ApplicationController
     end
     redirect_to categories_path
   end
-
 
   def category_params
     params.require(:category).permit(:title, :debit)

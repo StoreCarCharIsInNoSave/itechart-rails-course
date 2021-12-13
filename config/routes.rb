@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :person, only: [:create, :new, :index, :destroy, :edit, :update]
   resources :category, only: [:destroy]
   post '/person/new', to: 'person#create'
+
   post '/person/:id/edit', to: 'person#update'
 
   root 'home#index'
@@ -12,10 +13,13 @@ Rails.application.routes.draw do
 
   match '/404', to: 'errors#not_found', via: :all
 
-
   get '/categories', to: 'category#index'
 
+  get '/categories/:id/edit', to: 'category#edit'
+  post '/categories/:id/edit', to: 'category#update'
+
   get '/categories/new', to: 'category#new'
+
   post '/categories/new', to: 'category#create'
 
 end

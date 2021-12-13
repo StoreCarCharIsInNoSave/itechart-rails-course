@@ -20,7 +20,8 @@
 
     <div class="extra content">
       <div class="center aligned author">
-        <%=link_to 'Edit','#' ,class:'ui blue basic button' %>
+        <!-- TODO: Fix path -->
+        <%=link_to 'Edit','/categories/'+category.id.to_s+'/edit' ,class:'ui blue basic button' %>
         <%= link_to 'Delete', category_path(category), method: :delete, class: can_be_deleted?(category) ? 'ui red basic button': 'ui red basic button disabled', data: { confirm: 'Are you sure?' } %>
       </div>
     </div>
