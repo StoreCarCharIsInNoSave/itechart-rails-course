@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   post '/categories/:id/edit', to: 'category#update'
 
   get '/categories/new', to: 'category#new'
-
   post '/categories/new', to: 'category#create'
 
 end

@@ -23,15 +23,14 @@ class CategoryController < ApplicationController
   end
 
   def create
-    category = Category.new(category_params)
+    @category = Category.new(category_params)
     params[:category][:id].each do |person_id|
-      category.people << Person.find(person_id) if person_id.present? # check for empty string in params id field
+      @category.people << Person.find(person_id) if person_id.present? # check for empty string in params id field
     end
-    if category.save
+    if @category.save
       flash[:notice] = "Category created successfully"
       redirect_to categories_path
     else
-      flash[:alert] = "Category not created"
       render :new
     end
   end
