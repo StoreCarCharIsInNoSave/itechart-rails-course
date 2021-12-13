@@ -10,12 +10,12 @@ class CategoryController < ApplicationController
 
   def update
     @category = Category.find(params[:id])
-    PersonCategory.where(:category_id => @category.id).destroy_all
-    params[:category][:id].each do |person_id|
-      @category.people << Person.find(person_id) if person_id.present?
-    end
     if @category.update(category_params)
-      flash[:success] = "Category updated"
+      PersonCategory.where(:category_id => @category.id).destroy_all
+      params[:category][:id].each do |person_id|
+        @category.people << Person.find(person_id) if person_id.present?
+      end
+      flash[:notice] = "Category updated"
       redirect_to categories_path
     else
       render 'edit'

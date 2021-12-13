@@ -10,7 +10,9 @@ class Person < ApplicationRecord
   after_create :create_category
 
   def create_category
-    categories << Category.create(title: 'change me', debit: true)
+    category = Category.new(title: 'change me', debit: true)
+    category.people << self
+    category.save
   end
 
   def destroy
