@@ -25,8 +25,11 @@ RSpec.describe Person, type: :model do
   it 'should create new person with user' do
     person = Person.new(title: 'persontitle', name: 'personname', lastname: 'personlastnane')
     person.user = user
-    expect { person.save }.to change(Person, :count).by(1)
+    # 2 because when we create a new person, we saving user
+    # to database and new user automatically create one more person by default and then we have 2 persons
+    expect { person.save }.to change(Person, :count).by(2)
   end
+
 
   it 'should not create person with empty title' do
     person = Person.new(title: '', name: 'personname', lastname: 'personlastnane')
