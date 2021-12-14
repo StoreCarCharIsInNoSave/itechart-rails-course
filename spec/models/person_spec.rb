@@ -22,7 +22,7 @@ RSpec.describe Person, type: :model do
   end
 
 
-  it 'should create new person with user' do
+  it 'should create two new persons with user' do
     person = Person.new(title: 'persontitle', name: 'personname', lastname: 'personlastnane')
     person.user = user
     # 2 because when we create a new person, we saving user
