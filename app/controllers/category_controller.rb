@@ -1,6 +1,6 @@
 class CategoryController < ApplicationController
   before_action :category_find, only: [:edit, :update, :destroy]
-  before_action :require_signed_user, only: [:index, :edit, :update, :destroy]
+  before_action :require_signed_user, only: [:index, :edit, :update, :destroy, :new]
   before_action :require_same_signed_user, only: [:edit, :update, :destroy]
   def new
     @category = Category.new
