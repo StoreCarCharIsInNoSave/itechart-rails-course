@@ -6,9 +6,8 @@ class Category < ApplicationRecord
   validates :title, presence: true, length: { minimum: 3, maximum: 10 }
   validates :people, presence: true
 
-
   def destroy
-    self.people.each do |person|
+    people.each do |person|
       return false if person.categories.count == 1
     end
 
