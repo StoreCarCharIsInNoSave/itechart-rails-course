@@ -1,7 +1,7 @@
 <h2 class="ui center aligned icon header">
   <i class="circular money bill alternate outline icon"></i>
-  Create transaction
-  <div><%= link_to 'Create new transaction', '#', class: 'ui red basic button centered' %></div>
+  Your transaction
+  <div><%= link_to 'Create new transaction', transactions_new_path, class: 'ui red basic button centered' %></div>
 
 </h2>
 
@@ -20,8 +20,8 @@
 
     <div class="extra content">
       <div class="center aligned author">
-        <%=link_to 'Edit','#' ,class:'ui blue basic button' %>
-        <%= link_to 'Delete', '#', class:  'ui red basic button '  %>
+        <%=link_to 'Edit','/transactions/'+transaction.id.to_s+'/edit' ,class:'ui blue basic button' %>
+        <%= link_to 'Delete', money_transaction_path(transaction), method: :delete, class:  'ui red basic button ', data: {confirm: 'Are you sure?'}  %>
       </div>
     </div>
   </div>

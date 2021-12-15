@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :person, only: [:create, :new, :index, :destroy, :edit, :update]
   resources :category, only: [:destroy]
+  resources :money_transaction, only: [:destroy]
   post '/person/new', to: 'person#create'
 
   post '/person/:id/edit', to: 'person#update'
@@ -22,4 +23,10 @@ Rails.application.routes.draw do
   post '/categories/new', to: 'category#create'
 
   get '/transactions', to: 'money_transaction#index'
+
+  get '/transactions/new', to: 'money_transaction#new'
+  post '/transactions/new', to: 'money_transaction#create'
+
+  get '/transactions/:id/edit', to: 'money_transaction#edit'
+  post '/transactions/:id/edit', to: 'money_transaction#update'
 end
