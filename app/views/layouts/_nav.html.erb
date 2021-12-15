@@ -10,6 +10,7 @@
           <%= current_user.email.split('@')[0] %> <i class="dropdown icon"></i>
           <div class="menu">
          <%=link_to 'Persons', person_index_path, class: 'item' %>
+            <%=link_to 'Categories', categories_path, class: 'item' %>
           </div>
         </div>
         <div class="item">

@@ -35,6 +35,10 @@ class PersonController < ApplicationController
     end
   end
 
+  def categories_index
+    @categories = find_person.categories
+  end
+
   def destroy
     if @person.destroy
       flash[:notice] = 'Person deleted successfully'

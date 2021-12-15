@@ -1,0 +1,26 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular plus icon"></i>
+  Edit category
+</h2>
+
+
+<%= form_for :category do |f| %>
+  <div class="ui segment inverted">
+    <%= render "devise/shared/error_messages", resource:  @category %>
+    <div class="ui form inverted">
+      <div class="field">
+        <%= f.label :title %>
+        <%= f.text_field :title, placeholder: 'title' %>
+      </div>
+      <div class="field">
+        <%= f.label 'Debit' %>
+        <%= f.check_box :debit, placeholder: 'Debit' %>
+      </div>
+      <div class="field">
+        <%= f.label 'List of person' %>
+        <%= f.collection_select(:id, current_user.people.order(:name),:id,:name, {:prompt => nil}, {:multiple => true}) %>
+      </div>
+      <%= f.submit "Create category", class: 'ui button'%>
+    </div>
+  </div>
+<% end %>
