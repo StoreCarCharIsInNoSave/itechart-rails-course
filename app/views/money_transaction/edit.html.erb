@@ -17,8 +17,8 @@
         <%= f.check_box :important %>
       </div>
       <div class="field">
-        <%= f.label 'Relationship number between person and category' %>
-        <%= f.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :id) %>
+        <%= f.label 'Relationship between person and category' %>
+        <%= f.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :select_title) %>
       </div>
       <%= f.submit "Update transaction", class: 'ui button'%>
     </div>
