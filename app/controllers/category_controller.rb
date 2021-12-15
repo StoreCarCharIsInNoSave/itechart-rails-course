@@ -10,17 +10,18 @@ class CategoryController < ApplicationController
 
   def edit; end
 
+  #todo: refactor this method
   def update
-    if @category.update(category_params)
-      PersonCategory.where(category_id: @category.id).destroy_all
-      params[:category][:id].each do |person_id|
-        @category.people << Person.find(person_id) if person_id.present?
-      end
-      flash[:notice] = 'Category updated'
-      redirect_to categories_path
-    else
-      render 'edit'
-    end
+    # if @category.update(category_params)
+    #   PersonCategory.where(category_id: @category.id).destroy_all
+    #   params[:category][:id].each do |person_id|
+    #     @category.people << Person.find(person_id) if person_id.present?
+    #   end
+    #   flash[:notice] = 'Category updated'
+    #   redirect_to categories_path
+    # else
+    #   render 'edit'
+    # end
   end
 
   def create

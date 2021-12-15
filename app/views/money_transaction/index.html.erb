@@ -1,0 +1,28 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular money bill alternate outline icon"></i>
+  Create transaction
+  <div><%= link_to 'Create new transaction', '#', class: 'ui red basic button centered' %></div>
+
+</h2>
+
+<% @money_transactions.each do |transaction| %>
+
+  <div class="ui centered card">
+    <div class="content">
+      <div class="center aligned header"><%= transaction.person_category.person.title%></div>
+
+      <div class="center aligned description">
+        <p>Operation type: <%=transaction.person_category.category.debit ? 'Debit' : 'Credit' %></p>
+        <p>Category: <%=transaction.person_category.category.title %></p>
+        <p>Amount value: <%=transaction.amount_value %></p>
+      </div>
+    </div>
+
+    <div class="extra content">
+      <div class="center aligned author">
+        <%=link_to 'Edit','#' ,class:'ui blue basic button' %>
+        <%= link_to 'Delete', '#', class:  'ui red basic button '  %>
+      </div>
+    </div>
+  </div>
+<% end %>

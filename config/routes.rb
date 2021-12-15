@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   get '/categories/new', to: 'category#new'
   post '/categories/new', to: 'category#create'
 
+  get '/transactions', to: 'money_transaction#index'
 end
