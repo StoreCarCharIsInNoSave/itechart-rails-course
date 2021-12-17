@@ -16,6 +16,7 @@ class PersonController < ApplicationController
   def edit; end
 
   def update
+
     if @person.update(person_params)
       flash[:notice] = 'Person updated successfully'
       redirect_to person_index_path

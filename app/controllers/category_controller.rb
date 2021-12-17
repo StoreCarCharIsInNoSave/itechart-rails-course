@@ -4,6 +4,7 @@ class CategoryController < ApplicationController
   before_action :category_find, only: %i[edit update destroy]
   before_action :require_signed_user, only: %i[index edit update destroy new]
   before_action :require_same_signed_user, only: %i[edit update destroy]
+
   def new
     @category = Category.new
   end
@@ -22,6 +23,26 @@ class CategoryController < ApplicationController
     # else
     #   render 'edit'
     # end
+
+
+
+    if @category.update(category_params)
+      non_empty_params_categories = params[:category][:id].reject(&:empty?)
+
+      PersonCategory.where(category_id: @category.id).each do |person_category|
+        person_category.destroy if non_empty_params_categories.exclude?(person_category.person_id.to_s)
+      end
+
+      non_empty_params_categories.each do |person_id|
+        @category.people << Person.find(person_id) unless @category.people.include?(Person.find(person_id))
+      end
+
+
+      flash[:notice] = 'Category updated'
+      redirect_to categories_path
+    else
+      render 'edit'
+    end
   end
 
   def create
@@ -48,6 +69,20 @@ class CategoryController < ApplicationController
       flash[:alert] = 'For one of your persons this category is the only one. Last category could not be deleted'
     end
     redirect_to categories_path
+  end
+
+  def info
+    if params[:start_date].nil? || params[:end_date].nil?
+      @start_date = Date.today.beginning_of_month
+      @end_date = Date.today
+    else
+      @start_date = Date.parse(params[:start_date])
+      @end_date = Date.parse(params[:end_date])
+    end
+
+    @category = Category.find(params[:id])
+    all_person_category_of_this_category = PersonCategory.where(category_id: @category, created_at: @start_date..@end_date)
+    @money_transactions = MoneyTransaction.where(person_category_id: all_person_category_of_this_category)
   end
 
   private
