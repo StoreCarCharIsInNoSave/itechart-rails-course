@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   get '/transactions/new', to: 'money_transaction#new'
   post '/transactions/new', to: 'money_transaction#create'
 
-  get '/transactions/:id/edit', to: 'money_transaction#edit'
+  get '/transactions/:id/edit', to: 'money_transaction#edit', as: 'edit_transaction'
   post '/transactions/:id/edit', to: 'money_transaction#update'
 
   get '/categories/:id', to: 'category#info', as: 'category_info'
