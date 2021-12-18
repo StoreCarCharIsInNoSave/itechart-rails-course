@@ -10,13 +10,13 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get '/person/:id/categories', to: 'person#categories_index'
+  get '/person/:id/categories', to: 'person#categories_index', as: 'person_categories_index'
 
   match '/404', to: 'errors#not_found', via: :all
 
   get '/categories', to: 'category#index'
 
-  get '/categories/:id/edit', to: 'category#edit'
+  get '/categories/:id/edit', to: 'category#edit', as: 'edit_category'
   post '/categories/:id/edit', to: 'category#update'
 
   get '/categories/new', to: 'category#new'
