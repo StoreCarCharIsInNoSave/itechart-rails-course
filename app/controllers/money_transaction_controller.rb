@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MoneyTransactionController < ApplicationController
   def index
     current_user_person_categories = PersonCategory.where(person_id: current_user.people)
@@ -25,7 +27,7 @@ class MoneyTransactionController < ApplicationController
   def create
     @money_transaction = MoneyTransaction.new(money_transaction_params)
     if @money_transaction.save
-      flash[:notice] = "Money transaction was successfully created."
+      flash[:notice] = 'Money transaction was successfully created.'
       redirect_to transactions_path
     else
       render :new
@@ -35,9 +37,9 @@ class MoneyTransactionController < ApplicationController
   def destroy
     @money_transaction = MoneyTransaction.find(params[:id])
     if @money_transaction.destroy
-      flash[:notice] = "Money transaction was successfully deleted."
+      flash[:notice] = 'Money transaction was successfully deleted.'
     else
-      flash[:alert] = "Money transaction was not deleted."
+      flash[:alert] = 'Money transaction was not deleted.'
     end
     redirect_to transactions_path
   end
@@ -47,5 +49,4 @@ class MoneyTransactionController < ApplicationController
   def money_transaction_params
     params.require(:money_transaction).permit(:amount_value, :important, :person_category_id)
   end
-
 end

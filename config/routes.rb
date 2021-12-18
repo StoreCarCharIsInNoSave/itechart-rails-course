@@ -31,4 +31,5 @@ Rails.application.routes.draw do
   post '/transactions/:id/edit', to: 'money_transaction#update'
 
   get '/categories/:id', to: 'category#info', as: 'category_info'
+  post '/categories/:id', to: 'category#info', as: 'category_info_post'
 end

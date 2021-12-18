@@ -10,7 +10,7 @@
   <div class="ui centered card">
     <div class="content">
 
-      <%= link_to category.title + ' ['+category.is_debit_to_string+']', '/categories/'+category.id.to_s, class: 'center aligned header' %>
+      <%= link_to category.title + ' ['+category.debit_to_string+']', '/categories/'+category.id.to_s, class: 'center aligned header' %>
 
       <div class="center aligned description">
         <!--I used the uniq method because the same category can be debit or credit-->

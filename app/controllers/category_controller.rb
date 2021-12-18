@@ -2,8 +2,8 @@
 
 class CategoryController < ApplicationController
   before_action :category_find, only: %i[edit update destroy]
-  before_action :require_signed_user, only: %i[index edit update destroy new]
-  before_action :require_same_signed_user, only: %i[edit update destroy]
+  before_action :require_signed_user, only: %i[index edit update destroy new info]
+  before_action :require_same_signed_user, only: %i[edit update destroy info]
 
   def new
     @category = Category.new
@@ -11,33 +11,11 @@ class CategoryController < ApplicationController
 
   def edit; end
 
-  #todo: refactor this method
   def update
-    # if @category.update(category_params)
-    #   PersonCategory.where(category_id: @category.id).destroy_all
-    #   params[:category][:id].each do |person_id|
-    #     @category.people << Person.find(person_id) if person_id.present?
-    #   end
-    #   flash[:notice] = 'Category updated'
-    #   redirect_to categories_path
-    # else
-    #   render 'edit'
-    # end
-
-
-
     if @category.update(category_params)
       non_empty_params_categories = params[:category][:id].reject(&:empty?)
-
-      PersonCategory.where(category_id: @category.id).each do |person_category|
-        person_category.destroy if non_empty_params_categories.exclude?(person_category.person_id.to_s)
-      end
-
-      non_empty_params_categories.each do |person_id|
-        @category.people << Person.find(person_id) unless @category.people.include?(Person.find(person_id))
-      end
-
-
+      destroy_person_categories(@category, non_empty_params_categories)
+      add_person_to_category(@category, non_empty_params_categories)
       flash[:notice] = 'Category updated'
       redirect_to categories_path
     else
@@ -72,20 +50,41 @@ class CategoryController < ApplicationController
   end
 
   def info
-    if params[:start_date].nil? || params[:end_date].nil?
+    if non_empty_params_categories?(params)
       @start_date = Date.today.beginning_of_month
       @end_date = Date.today
     else
-      @start_date = Date.parse(params[:start_date])
-      @end_date = Date.parse(params[:end_date])
+      @start_date = Date.parse(params[:money_transaction][:start_date])
+      @end_date = Date.parse(params[:money_transaction][:end_date])
     end
-
     @category = Category.find(params[:id])
-    all_person_category_of_this_category = PersonCategory.where(category_id: @category, created_at: @start_date..@end_date)
-    @money_transactions = MoneyTransaction.where(person_category_id: all_person_category_of_this_category)
+    @transactions = MoneyTransaction.where(person_category_id: pc_of_category(@category, @start_date, @end_date))
+    @sum_amount_value = @transactions.inject(0) { |sum, t| sum + t.amount_value }
   end
 
   private
+
+  def pc_of_category(category, start_date, end_date)
+    PersonCategory.where(category_id: category, created_at: start_date..end_date)
+  end
+
+  def non_empty_params_categories?(params)
+    params[:money_transaction].nil? ||
+      params[:money_transaction][:start_date].nil? ||
+      params[:money_transaction][:end_date].nil?
+  end
+
+  def destroy_person_categories(category, non_empty_params)
+    PersonCategory.where(category_id: category.id).each do |person_category|
+      person_category.destroy if non_empty_params.exclude?(person_category.person_id.to_s)
+    end
+  end
+
+  def add_person_to_category(category, non_empty_params)
+    non_empty_params.each do |person_id|
+      category.people << Person.find(person_id) unless category.people.include?(Person.find(person_id))
+    end
+  end
 
   def category_params
     params.require(:category).permit(:title, :debit)
