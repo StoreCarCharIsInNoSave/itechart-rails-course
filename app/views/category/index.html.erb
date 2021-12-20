@@ -9,20 +9,20 @@
 
   <div class="ui centered card">
     <div class="content">
-      <div class="center aligned header"><%= category.title %> [<%= category.debit ? 'Debit' : 'Credit' %>]</div>
+
+      <%= link_to category.title + ' ['+category.debit_to_string+']', '/categories/'+category.id.to_s, class: 'center aligned header' %>
 
       <div class="center aligned description">
         <!--I used the uniq method because the same category can be debit or credit-->
-        <p>Count of persons: <%=category.person_ids.uniq.count %></p>
+        <p>Count of persons: <%= category.person_ids.uniq.count %></p>
         <p>Total amount: N/A</p>
       </div>
     </div>
 
     <div class="extra content">
       <div class="center aligned author">
-        <!-- TODO: Fix path -->
-        <%=link_to 'Edit','/categories/'+category.id.to_s+'/edit' ,class:'ui blue basic button' %>
-        <%= link_to 'Delete', category_path(category), method: :delete, class: can_be_deleted?(category) ? 'ui red basic button': 'ui red basic button disabled', data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Edit', edit_category_path(category), class: 'ui blue basic button' %>
+        <%= link_to 'Delete', category_path(category), method: :delete, class: can_be_deleted?(category) ? 'ui red basic button' : 'ui red basic button disabled', data: { confirm: 'Are you sure?' } %>
       </div>
     </div>
   </div>

@@ -13,4 +13,8 @@ class Category < ApplicationRecord
 
     super
   end
+
+  def debit_to_string
+    debit ? 'Debit' : 'Credit'
+  end
 end

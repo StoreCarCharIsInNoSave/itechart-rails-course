@@ -6,7 +6,12 @@
         Financial supervision
       </h1>
       <h2>Keep track of your funds in a convenient way</h2>
-      <div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>
+      <% if user_signed_in? %>
+        <%=link_to 'Your transactions', transactions_path, class: 'ui huge primary button ' %>
+        <%=link_to 'Create new transaction', transactions_new_path, class: 'ui huge primary button ' %>
+      <%else %>
+        <%=link_to 'Sign Up ',new_user_registration_path , class: 'ui huge primary button ' %>
+    <%end %>
     </div>
   </div>
 </div>

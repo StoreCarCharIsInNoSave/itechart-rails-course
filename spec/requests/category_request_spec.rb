@@ -25,7 +25,7 @@ RSpec.describe "Categories", type: :request do
     get '/categories/'+category.id.to_s+'/edit'
     expect(response.body).to include('Edit category')
   end
-  
+
   it 'should not get edit page of category with own of other user' do
     sign_out user
     other_user = User.create(email: 'sgsdf@gmail.com', password: 'fsdffsdfsd')
