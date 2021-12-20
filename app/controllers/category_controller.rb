@@ -49,20 +49,26 @@ class CategoryController < ApplicationController
     redirect_to categories_path
   end
 
+  # rubocop:disable Metrics/AbcSize
   def info
     if non_empty_params_categories?(params)
       @start_date = Date.today.beginning_of_month
-      @end_date = Date.today
+      @end_date = date_to_datetime(Date.today)
     else
       @start_date = Date.parse(params[:money_transaction][:start_date])
-      @end_date = Date.parse(params[:money_transaction][:end_date])
+      @end_date = date_to_datetime(Date.parse(params[:money_transaction][:end_date]))
     end
     @category = Category.find(params[:id])
     @transactions = MoneyTransaction.where(person_category_id: pc_of_category(@category, @start_date, @end_date))
     @sum_amount_value = @transactions.inject(0) { |sum, t| sum + t.amount_value }
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
+
+  def date_to_datetime(date)
+    date.to_datetime.end_of_day
+  end
 
   def pc_of_category(category, start_date, end_date)
     PersonCategory.where(category_id: category, created_at: start_date..end_date)
