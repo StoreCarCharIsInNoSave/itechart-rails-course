@@ -1,0 +1,23 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular sticky note outline icon"></i>
+  Update Note
+</h2>
+
+
+<%= form_for :note do |f| %>
+
+  <div class="ui segment inverted">
+    <%= render "devise/shared/error_messages", resource: @note%>
+    <div class="ui form inverted">
+      <div class="field">
+        <%= f.label 'Note text' %>
+        <%= f.text_field :body, placeholder: 'Note text' %>
+      </div>
+      <div class="field">
+        <%= f.label 'Text color' %>
+        <%= f.color_field :color %>
+      </div>
+      <%= f.submit "Update note", class: 'ui button'%>
+    </div>
+  </div>
+<% end %>

@@ -29,7 +29,7 @@
       <div class="center aligned description">
         <p>Operation type: <%= transaction.person_category.category.debit ? 'Debit' : 'Credit' %></p>
         <p>Category: <%= transaction.person_category.category.title %></p>
-        <p>Amount value: <%= transaction.amount_value  %></p>
+        <p>Amount value: <%= transaction.amount_value %></p>
 
         <% unless transaction.note.nil? %>
 
@@ -37,16 +37,15 @@
             <div class="content">
               <div class="center aligned header">Note</div>
               <div class="center aligned description">
-                <p class="center aligned note-body" style="color: <%=transaction.note.color %>" ><%=transaction.note.body%></p>
-                <%=link_to 'Edit', edit_note_path(transaction.note), class:'ui blue basic mini button' %>
-                <%=link_to 'Delete', note_path(transaction.note), method: :delete, data: { confirm: 'Are you sure?' }, class:'ui red basic mini button' %>
+                <p class="center aligned note-body" style="color: <%= transaction.note.color %>"><%= transaction.note.body %></p>
+                <%= link_to 'Edit', edit_note_path(transaction.note), class: 'ui blue basic mini button' %>
+                <%= link_to 'Delete', note_path(transaction.note), method: :delete, data: { confirm: 'Are you sure?' }, class: 'ui red basic mini button' %>
               </div>
             </div>
-
           </div>
-
-
-      <% end %>
+        <% else %>
+          <p>Note: not exist</p>
+        <% end %>
       </div>
     </div>
 
