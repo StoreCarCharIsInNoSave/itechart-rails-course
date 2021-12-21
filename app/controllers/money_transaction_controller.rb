@@ -52,7 +52,11 @@ class MoneyTransactionController < ApplicationController
 
     note = Note.new(body: params[:note_body].values[0], color: params[:color].values[0])
     transaction.note = note if note.valid?
-    flash[:alert] = "Note was not added. #{note.errors.full_messages.join(', ')}. Saved without note"
+    if note.valid?
+      transaction.note = note
+    else
+      flash[:alert] = "Note was not added. #{note.errors.full_messages.join(', ')}. Saved without note"
+    end
   end
 
   def money_transaction_find

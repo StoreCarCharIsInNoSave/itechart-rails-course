@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :person, only: [:create, :new, :index, :destroy, :edit, :update]
   resources :category, only: [:destroy]
   resources :money_transaction, only: [:destroy]
+  resources :note , only: [:destroy]
   post '/person/new', to: 'person#create'
 
   post '/person/:id/edit', to: 'person#update'
@@ -32,4 +33,8 @@ Rails.application.routes.draw do
 
   get '/categories/:id', to: 'category#info', as: 'category_info'
   post '/categories/:id', to: 'category#info', as: 'category_info_post'
+
+  get '/note/:id/show', to: 'note#show', as: 'show_note'
+  get '/note/:id/edit', to: 'note#edit', as: 'edit_note'
+  post '/note/:id/edit', to: 'note#update'
 end
