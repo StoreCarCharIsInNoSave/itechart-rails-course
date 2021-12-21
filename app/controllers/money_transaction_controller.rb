@@ -4,6 +4,7 @@ class MoneyTransactionController < ApplicationController
   before_action :money_transaction_find, only: %i[edit update destroy]
   before_action :require_signed_user, only: %i[new create edit update destroy index]
   before_action :require_same_signed_user, only: %i[edit update destroy]
+
   def index
     current_user_person_categories = PersonCategory.where(person_id: current_user.people)
     @money_transactions = MoneyTransaction.where(person_category_id: current_user_person_categories)
@@ -50,7 +51,8 @@ class MoneyTransactionController < ApplicationController
     return if params[:note_required].nil?
 
     note = Note.new(body: params[:note_body].values[0], color: params[:color].values[0])
-    transaction.note = note
+    transaction.note = note if note.valid?
+    flash[:alert] = "Note was not added. #{note.errors.full_messages.join(', ')}. Saved without note"
   end
 
   def money_transaction_find
