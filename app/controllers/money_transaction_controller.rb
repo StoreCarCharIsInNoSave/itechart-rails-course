@@ -25,7 +25,14 @@ class MoneyTransactionController < ApplicationController
   end
 
   def create
-    render plain: params
+    @money_transaction = MoneyTransaction.new(money_transaction_params)
+    add_note(@money_transaction, params)
+    if @money_transaction.save
+      flash[:notice] = 'Money transaction was successfully created.'
+      redirect_to transactions_path
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -38,6 +45,13 @@ class MoneyTransactionController < ApplicationController
   end
 
   private
+
+  def add_note(transaction, params)
+    return if params[:note_required].nil?
+
+    note = Note.new(body: params[:note_body].values[0], color: params[:color].values[0])
+    transaction.note = note
+  end
 
   def money_transaction_find
     @money_transaction = MoneyTransaction.find(params[:id])
