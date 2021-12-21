@@ -55,7 +55,7 @@ class MoneyTransactionController < ApplicationController
     if note.valid?
       transaction.note = note
     else
-      flash[:alert] = "Note was not added. #{note.errors.full_messages.join(', ')}. Saved without note"
+      flash[:alert] = 'Note was not added. Saved without note'
     end
   end
 

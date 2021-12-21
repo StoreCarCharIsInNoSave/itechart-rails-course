@@ -9,5 +9,4 @@ class MoneyTransaction < ApplicationRecord
     note = Note.find_by(id: note_id)
     note.destroy if note.present?
   end
-
 end

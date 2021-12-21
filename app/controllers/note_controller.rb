@@ -1,5 +1,6 @@
-class NoteController < ApplicationController
+# frozen_string_literal: true
 
+class NoteController < ApplicationController
   def show
     @note = Note.find(params[:id])
   end
@@ -35,5 +36,4 @@ class NoteController < ApplicationController
   def note_params
     params.require(:note).permit(:body, :color)
   end
-
 end
