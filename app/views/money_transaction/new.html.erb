@@ -13,12 +13,30 @@
         <%= f.text_field :amount_value, placeholder: 'Amount' %>
       </div>
       <div class="field">
-        <div class="important-handler"><%= f.label 'Important status: ' %>
-          <%= f.check_box :important , class: 'important-checkbox'%>
+        <div class="important-handler">
+          <%= f.label 'Important status: ' %>
+          <%= f.check_box :important, class: 'important-checkbox' %>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="important-handler">
+          <%= label_tag 'Create note for this transaction: ' %>
+          <%= check_box_tag :note_required, 'yes', true, class: 'important-checkbox' %>
         </div>
       </div>
 
 
+      <div class="note-field">
+        <div class="field">
+          <label for="">Text of your note:</label>
+          <%= text_field :note_body, placeholder: 'Text of your note' %>
+        </div>
+        <div class="note-color field">
+          <label class="color-label">Color of your note:</label>
+          <%= color_field :color, type: 'color' %>
+        </div>
+      </div>
       <div class="field">
         <%= f.label 'Relationship between person and category' %>
         <%= f.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :select_title) %>

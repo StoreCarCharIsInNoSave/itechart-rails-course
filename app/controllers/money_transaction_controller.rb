@@ -25,13 +25,7 @@ class MoneyTransactionController < ApplicationController
   end
 
   def create
-    @money_transaction = MoneyTransaction.new(money_transaction_params)
-    if @money_transaction.save
-      flash[:notice] = 'Money transaction was successfully created.'
-      redirect_to transactions_path
-    else
-      render :new
-    end
+    render plain: params
   end
 
   def destroy
