@@ -18,12 +18,22 @@
 //= require_tree .
 
 
-//TODO: does not work  after click on any link
-$(document).ready(function () {
+
+$(document).on('turbolinks:load',function () {
     $('.ui.dropdown').dropdown();
     $('.message .close').on('click', function () {
         $(this).closest('.message').transition('fade');
     });
 });
 
+
+$(document).on('turbolinks:load',function () {
+    $('#note_required').change(function () {
+        if ($(this).is(":checked")) {
+            $('.note-field').show();
+        } else {
+            $('.note-field').hide();
+        }
+    });
+});
 

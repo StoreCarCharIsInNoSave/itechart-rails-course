@@ -59,12 +59,20 @@ class CategoryController < ApplicationController
       @end_date = date_to_datetime(Date.parse(params[:money_transaction][:end_date]))
     end
     @category = Category.find(params[:id])
-    @transactions = MoneyTransaction.where(person_category_id: pc_of_category(@category, @start_date, @end_date))
+    @transactions = transaction_selector(pc_of_category(@category, @start_date, @end_date), params)
     @sum_amount_value = @transactions.inject(0) { |sum, t| sum + t.amount_value }
   end
   # rubocop:enable Metrics/AbcSize
 
   private
+
+  def transaction_selector(person_category, params)
+    transactions = MoneyTransaction.where(person_category_id: person_category)
+    if !params[:with_note].nil? && (params[:with_note].values[0] == '1')
+      transactions = transactions.where.not(note: nil)
+    end
+    transactions
+  end
 
   def date_to_datetime(date)
     date.to_datetime.end_of_day

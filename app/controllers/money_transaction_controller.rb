@@ -4,6 +4,7 @@ class MoneyTransactionController < ApplicationController
   before_action :money_transaction_find, only: %i[edit update destroy]
   before_action :require_signed_user, only: %i[new create edit update destroy index]
   before_action :require_same_signed_user, only: %i[edit update destroy]
+
   def index
     current_user_person_categories = PersonCategory.where(person_id: current_user.people)
     @money_transactions = MoneyTransaction.where(person_category_id: current_user_person_categories)
@@ -26,6 +27,7 @@ class MoneyTransactionController < ApplicationController
 
   def create
     @money_transaction = MoneyTransaction.new(money_transaction_params)
+    add_note(@money_transaction, params)
     if @money_transaction.save
       flash[:notice] = 'Money transaction was successfully created.'
       redirect_to transactions_path
@@ -44,6 +46,18 @@ class MoneyTransactionController < ApplicationController
   end
 
   private
+
+  def add_note(transaction, params)
+    return if params[:note_required].nil?
+
+    note = Note.new(body: params[:note_body].values[0], color: params[:color].values[0])
+    transaction.note = note if note.valid?
+    if note.valid?
+      transaction.note = note
+    else
+      flash[:alert] = 'Note was not added. Saved without note'
+    end
+  end
 
   def money_transaction_find
     @money_transaction = MoneyTransaction.find(params[:id])

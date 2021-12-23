@@ -40,5 +40,10 @@ RSpec.describe "MoneyTransactions", type: :request do
     get edit_transaction_path(mt)
     expect(response.body).to include('example')
   end
+  it 'should show transaction of category after creating new transaction' do
+    mt = MoneyTransaction.create(amount_value: 100, person_category: user.people.first.person_categories.first )
+    get category_info_path(mt.person_category.category)
+    expect(response.body).to include('Edit')
+  end
 
 end
