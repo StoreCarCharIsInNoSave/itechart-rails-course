@@ -25,6 +25,12 @@ class MoneyTransactionController < ApplicationController
     end
   end
 
+  def important
+    current_user_person_categories = PersonCategory.where(person_id: current_user.people)
+    money_transactions = MoneyTransaction.where(person_category_id: current_user_person_categories)
+    @money_transactions = money_transactions.where(important: true)
+  end
+
   def create
     @money_transaction = MoneyTransaction.new(money_transaction_params)
     add_note(@money_transaction, params)
