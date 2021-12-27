@@ -9,7 +9,7 @@ RSpec.describe "Charts", type: :request do
     get information_page_path
     expect(response.body).to include('Chart information')
   end
-  it 'should get access to chart page without user' do
+  it 'should not get access to chart page without user' do
     sign_out user
     get information_page_path
     expect(response.body).to include('example')
