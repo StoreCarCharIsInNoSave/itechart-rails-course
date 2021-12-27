@@ -63,8 +63,6 @@ class CategoryController < ApplicationController
     @sum_amount_value = @transactions.inject(0) { |sum, t| sum + t.amount_value }
   end
 
-
-
   private
 
   def transaction_selector(person_category, params)

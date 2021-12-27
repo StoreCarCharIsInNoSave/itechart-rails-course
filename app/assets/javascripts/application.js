@@ -15,6 +15,8 @@
 //= require activestorage
 //= require turbolinks
 //= require semantic-ui
+//= require chartkick
+//= require Chart.bundle
 //= require_tree .
 
 

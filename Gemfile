@@ -29,7 +29,9 @@ gem 'semantic-ui-sass'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'chartkick'
 gem 'factory_bot'
+gem 'groupdate'
 gem 'rspec'
 gem 'rubocop'
 # Use ActiveStorage variant

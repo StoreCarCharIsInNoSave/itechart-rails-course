@@ -38,4 +38,6 @@ Rails.application.routes.draw do
   get '/note/:id/edit', to: 'note#edit', as: 'edit_note'
   post '/note/:id/edit', to: 'note#update'
   get '/transactions/important', to: 'money_transaction#important', as: 'important_index'
+  get '/information', to: 'charts#index', as: 'information_page'
+  post '/information', to: 'charts#index', as: 'information_page_post'
 end
