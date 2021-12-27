@@ -1,0 +1,28 @@
+<h2 class="ui center aligned icon header">
+  <i class="circular bell outline icon"></i>
+  Your important transactions
+
+</h2>
+
+
+<% @money_transactions.each do |transaction| %>
+
+  <div class="ui centered card">
+    <div class="content">
+      <div class="center aligned header"><%= transaction.person_category.person.title%></div>
+
+      <div class="center aligned description">
+        <p>Operation type: <%=transaction.person_category.category.debit ? 'Debit' : 'Credit' %></p>
+        <p>Category: <%=transaction.person_category.category.title %></p>
+        <p>Amount value: <%=transaction.amount_value %></p>
+      </div>
+    </div>
+
+    <div class="extra content">
+      <div class="center aligned author">
+        <%=link_to 'Edit',edit_transaction_path(transaction) ,class:'ui blue basic button' %>
+        <%= link_to 'Delete', money_transaction_path(transaction), method: :delete, class:  'ui red basic button ', data: {confirm: 'Are you sure?'}  %>
+      </div>
+    </div>
+  </div>
+<% end %>

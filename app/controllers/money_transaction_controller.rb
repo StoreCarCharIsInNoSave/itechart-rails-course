@@ -2,7 +2,7 @@
 
 class MoneyTransactionController < ApplicationController
   before_action :money_transaction_find, only: %i[edit update destroy]
-  before_action :require_signed_user, only: %i[new create edit update destroy index]
+  before_action :require_signed_user, only: %i[new create edit update destroy index important]
   before_action :require_same_signed_user, only: %i[edit update destroy]
 
   def index
@@ -23,6 +23,12 @@ class MoneyTransactionController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def important
+    current_user_person_categories = PersonCategory.where(person_id: current_user.people)
+    money_transactions = MoneyTransaction.where(person_category_id: current_user_person_categories)
+    @money_transactions = money_transactions.where(important: true)
   end
 
   def create
