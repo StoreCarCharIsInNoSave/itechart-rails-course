@@ -5,7 +5,7 @@ class ChartsController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def index
-    if non_empty_params_categories?(params)
+    if params_date_validator(params)
       @start_date = Date.today.beginning_of_month
       @end_date = date_to_datetime(Date.today)
     else
@@ -33,15 +33,17 @@ class ChartsController < ApplicationController
     credit_transactions = []
     categories.reject(&:debit).each do |category|
       credit_transactions += [[category.title, MoneyTransaction.where(person_category_id: category.person_categories,
-                                                                     created_at: sdate..edate).sum(:amount_value)]]
+                                                                      created_at: sdate..edate).sum(:amount_value)]]
     end
     credit_transactions
   end
 
-  def non_empty_params_categories?(params)
+  def params_date_validator(params)
     params[:money_transaction].nil? ||
       params[:money_transaction][:start_date].nil? ||
-      params[:money_transaction][:end_date].nil?
+      params[:money_transaction][:end_date].nil? ||
+      !date?(params[:money_transaction][:start_date]) ||
+      !date?(params[:money_transaction][:end_date])
   end
 
   def date_to_datetime(date)
@@ -53,5 +55,9 @@ class ChartsController < ApplicationController
 
     flash[:alert] = 'You must be signed in to access this page.'
     redirect_to root_path
+  end
+
+  def date?(date)
+    date =~ /\d{4}-\d{2}-\d{2}/
   end
 end
