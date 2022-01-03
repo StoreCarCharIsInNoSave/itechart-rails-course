@@ -12,10 +12,10 @@ class CategoryController < ApplicationController
   def edit; end
 
   def update
-    if @category.update(category_params)
-      non_empty_params_categories = params[:category][:id].reject(&:empty?)
-      destroy_person_categories(@category, non_empty_params_categories)
-      add_person_to_category(@category, non_empty_params_categories)
+    prms = params[:category][:id].reject(&:empty?)
+    if !prms.empty? && @category.update(category_params)
+      destroy_person_categories(@category, prms)
+      add_person_to_category(@category, prms)
       flash[:notice] = 'Category updated'
       redirect_to categories_path
     else
@@ -69,6 +69,7 @@ class CategoryController < ApplicationController
     trs.where(important: true) if !params[:important].nil? && (params[:important].values[0] == '1')
     trs
   end
+
   # rubocop:enable Metrics/AbcSize
 
   def date_to_datetime(date)
