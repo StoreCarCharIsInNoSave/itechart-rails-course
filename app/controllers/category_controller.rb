@@ -12,10 +12,10 @@ class CategoryController < ApplicationController
   def edit; end
 
   def update
-    if @category.update(category_params)
-      non_empty_params_categories = params[:category][:id].reject(&:empty?)
-      destroy_person_categories(@category, non_empty_params_categories)
-      add_person_to_category(@category, non_empty_params_categories)
+    prms = params[:category][:id].reject(&:empty?)
+    if !prms.empty? && @category.update(category_params)
+      destroy_person_categories(@category, prms)
+      add_person_to_category(@category, prms)
       flash[:notice] = 'Category updated'
       redirect_to categories_path
     else
@@ -25,9 +25,7 @@ class CategoryController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    params[:category][:id].each do |person_id|
-      @category.people << Person.find(person_id) if person_id.present? # check for empty string in params id field
-    end
+    params[:category][:id].each { |id| @category.people << Person.find(id) if id.present? }
     if @category.save
       flash[:notice] = 'Category created successfully'
       redirect_to categories_path
@@ -51,7 +49,7 @@ class CategoryController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def info
-    if non_empty_params_categories?(params)
+    if params_date_validator(params)
       @start_date = Date.today.beginning_of_month
       @end_date = date_to_datetime(Date.today)
     else
@@ -63,32 +61,33 @@ class CategoryController < ApplicationController
     @sum_amount_value = @transactions.inject(0) { |sum, t| sum + t.amount_value }
   end
 
-
-
   private
 
   def transaction_selector(person_category, params)
     trs = MoneyTransaction.where(person_category_id: person_category)
-    trs = trs.where.not(note: nil) if !params[:with_note].nil? &&
-                                      (params[:with_note].values[0] == '1')
-    trs = trs.where(important: true) if !params[:important].nil? &&
-                                        (params[:important].values[0] == '1')
+    trs = trs.where.not(note: nil) if !params[:with_note].nil? && (params[:with_note].values[0] == '1')
+    trs.where(important: true) if !params[:important].nil? && (params[:important].values[0] == '1')
     trs
   end
+
   # rubocop:enable Metrics/AbcSize
 
   def date_to_datetime(date)
     date.to_datetime.end_of_day
   end
 
+  def date?(date)
+    date =~ /\d{4}-\d{2}-\d{2}/
+  end
+
   def pc_of_category(category, start_date, end_date)
     PersonCategory.where(category_id: category, created_at: start_date..end_date)
   end
 
-  def non_empty_params_categories?(params)
-    params[:money_transaction].nil? ||
-      params[:money_transaction][:start_date].nil? ||
-      params[:money_transaction][:end_date].nil?
+  def params_date_validator(params)
+    params[:money_transaction].nil? || params[:money_transaction][:start_date].nil? ||
+      params[:money_transaction][:end_date].nil? || !date?(params[:money_transaction][:start_date]) ||
+      !date?(params[:money_transaction][:end_date])
   end
 
   def destroy_person_categories(category, non_empty_params)
